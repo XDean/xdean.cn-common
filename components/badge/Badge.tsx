@@ -14,11 +14,11 @@ type Props = {
 export const Badge = (props: Props) => {
   const {left, right, tooltip, loading, onLeftClick, onRightClick} = props
   return (
-    <div className={clsx('border border-gray-300 rounded flex items-center justify-center shadow')}
+    <div className={clsx('inline-flex border border-gray-300 rounded items-center justify-center shadow')}
          title={tooltip}
     >
       <div
-        className={clsx('p-1 font-sans transition duration-300 border-r',
+        className={clsx('p-1 font-sans transition duration-300',
           onLeftClick && 'cursor-pointer hover:bg-gray-200'
         )}
         onClick={onLeftClick}
@@ -27,7 +27,7 @@ export const Badge = (props: Props) => {
       </div>
       {(loading || right !== undefined) && (
         <div
-          className={clsx('pl-2 pr-2 py-1',
+          className={clsx('pl-2 pr-2 py-1 border-l',
             onRightClick && 'cursor-pointer hover:bg-gray-200'
           )}
           onClick={onRightClick}

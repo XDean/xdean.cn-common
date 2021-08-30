@@ -2,18 +2,23 @@ CREATE DATABASE IF NOT EXISTS xdean;
 
 USE xdean;
 
-CREATE TABLE IF NOT EXISTS blog_post_like
+CREATE TABLE IF NOT EXISTS obj_likes
 (
-    post_id VARCHAR(256)                        NOT NULL,
+    obj_id  VARCHAR(256)                        NOT NULL,
     user_id INT                                 NOT NULL,
     time    TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
-    CONSTRAINT UNIQUE INDEX blog_post_like_unique_idx (post_id, user_id)
+    CONSTRAINT UNIQUE INDEX obj_likes_unique_idx (obj_id, user_id)
 );
 
-CREATE TABLE IF NOT EXISTS blog_post_read
+CREATE TABLE IF NOT EXISTS obj_reads
 (
-    post_id VARCHAR(256)                        NOT NULL,
+    obj_id  VARCHAR(256)                        NOT NULL,
     user_id INT                                 NOT NULL,
     time    TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
-    CONSTRAINT UNIQUE INDEX blog_post_read_unique_idx (post_id, user_id)
+    CONSTRAINT UNIQUE INDEX obj_reads_unique_idx (obj_id, user_id)
 );
+
+INSERT INTO obj_likes(obj_id, user_id, time)
+SELECT post_id, user_id, time FROM `blog_post_like`;
+INSERT INTO obj_reads(obj_id, user_id, time)
+SELECT post_id, user_id, time FROM `blog_post_read`;
