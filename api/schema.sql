@@ -17,8 +17,3 @@ CREATE TABLE IF NOT EXISTS obj_reads
     time    TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
     CONSTRAINT UNIQUE INDEX obj_reads_unique_idx (obj_id, user_id)
 );
-
-INSERT INTO obj_likes(obj_id, user_id, time)
-SELECT post_id, user_id, time FROM `blog_post_like`;
-INSERT INTO obj_reads(obj_id, user_id, time)
-SELECT post_id, user_id, time FROM `blog_post_read`;
