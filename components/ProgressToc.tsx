@@ -122,7 +122,6 @@ export const ProgressToc = ({children}: PropsWithChildren<{}>) => {
     window.addEventListener('scroll', sync, false);
 
     drawPath();
-    console.log('update')
     return () => {
       window.removeEventListener('resize', drawPath, false)
       window.removeEventListener('scroll', sync, false)
