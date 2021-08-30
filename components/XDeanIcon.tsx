@@ -1,5 +1,5 @@
 import Image from "./Image";
-import xdeanLogo from "public/favicon.ico";
+import xdeanLogo from "../resources/logo.ico";
 
 type Props = {
   width?: number
