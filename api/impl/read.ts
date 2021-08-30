@@ -12,8 +12,8 @@ export async function getRead(params: {
   await database.query<OkPacket>(insertSql, [objId, userId])
 
   const selectSql = `SELECT COUNT(*) AS total
-      FROM xdean.tutorial_article_read 
-      WHERE post_id = ?`;
+      FROM xdean.obj_reads 
+      WHERE obj_id = ?`;
   const result = await database.query<{ total: number }[]>(selectSql, [objId])
   return result[0]
 }
