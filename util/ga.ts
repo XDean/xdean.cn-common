@@ -1,6 +1,6 @@
 import {useEffect} from "react";
 import {useRouter} from "next/router";
-import ReactGA from 'react-ga'
+import ReactGA from 'react-ga4'
 
 export const useGA = (id: string) => {
   const router = useRouter()
