@@ -11,3 +11,9 @@ export function stringToBoolean(s: string) {
       return false;
   }
 }
+
+export type Data<T> =
+  { type: 'null' }
+  | { type: 'loading' }
+  | { type: 'ready', value: T }
+  | { type: 'error', error: string }
