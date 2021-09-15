@@ -1,8 +1,8 @@
-import React from "react";
+import React, {ReactNode} from "react";
 import {Badge} from "./Badge";
 
 type Props = {
-  total?: number
+  total?: number | ReactNode
   loading?: boolean
 }
 

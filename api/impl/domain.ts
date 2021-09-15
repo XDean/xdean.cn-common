@@ -4,5 +4,6 @@ export type Like = {
 }
 
 export type Read = {
-  total:number
+  total: number
+  unique_total: number
 }
