@@ -51,7 +51,7 @@ export function apiHandler<T>(options: Options<T>): NextApiHandler {
         code: 405,
         support: Object.keys(handler)
       })
-    } catch (e) {
+    } catch (e: any) {
       if ('type' in e && e.type === 'ApiError') {
         const ae = e as ApiError
         return res.status(ae.code).json(ae.body)
