@@ -32,7 +32,10 @@ export const createHelper = (req: NextApiRequest, res: NextApiResponse): Helper 
     const userId = Number(req.cookies['userId'])
     if (!userId) {
       const uuid = randomInt(2 << 30 - 1)
-      this.setCookie('userId', uuid)
+      this.setCookie('userId', uuid, {
+        domain: 'xdean.cn',
+        expires: new Date(253402300000000),
+      })
       return uuid
     }
     return userId
