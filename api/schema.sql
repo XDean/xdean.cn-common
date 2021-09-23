@@ -17,3 +17,7 @@ CREATE TABLE IF NOT EXISTS obj_reads
     time    TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
     CONSTRAINT UNIQUE INDEX obj_reads_unique_idx (obj_id, user_id)
 );
+
+ALTER TABLE obj_reads
+    ADD `count`         INT       DEFAULT 1                 NOT NULL,
+    ADD `last_modified` TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL ON UPDATE CURRENT_TIMESTAMP;

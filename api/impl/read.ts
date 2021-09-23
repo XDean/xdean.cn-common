@@ -7,13 +7,15 @@ export async function getRead(params: {
   userId: number
 }): Promise<Read> {
   const {userId, objId} = params
-  const insertSql = `INSERT IGNORE INTO xdean.obj_reads(obj_id, user_id)
-                     VALUES (?, ?)`
+  const insertSql = `INSERT INTO xdean.obj_reads(obj_id, user_id)
+                     VALUES (?, ?)
+                     ON DUPLICATE KEY UPDATE count = IF(TIMESTAMPDIFF(SECOND, last_modified, CURRENT_TIMESTAMP) > 1800,
+                                                        count + 1, count)`
   await database.query<OkPacket>(insertSql, [objId, userId])
 
-  const selectSql = `SELECT COUNT(*) AS total
+  const selectSql = `SELECT COUNT(*) AS unique_total, SUM(count) AS total
       FROM xdean.obj_reads 
       WHERE obj_id = ?`;
-  const result = await database.query<{ total: number }[]>(selectSql, [objId])
+  const result = await database.query<Read[]>(selectSql, [objId])
   return result[0]
 }
