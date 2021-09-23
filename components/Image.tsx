@@ -2,7 +2,7 @@ import NextImage, {ImageProps} from 'next/image'
 import clsx from "clsx";
 import {useRouter} from "next/router";
 
-type Props = Omit<ImageProps, 'width' | 'height' | 'src'> & {
+type Props = Omit<ImageProps, 'width' | 'src'> & {
   maxWidth?: number | string
   width?: number | string
   src: Exclude<ImageProps['src'], string>
