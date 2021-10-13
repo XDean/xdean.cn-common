@@ -21,7 +21,7 @@ export function apiError(code: number, message: string, body?: any) {
   } as ApiError
 }
 
-type Handler<T = any> = (params: { req: NextApiRequest, res: NextApiResponse<T>, helper: Helper }) => T | Promise<T>
+type Handler<T = any> = (params: { req: NextApiRequest, res: NextApiResponse<T>, helper: Helper }) => void | T | Promise<T>
 
 type Options<T> = {
   handler: {
@@ -40,12 +40,16 @@ export function apiHandler<T>(options: Options<T>): NextApiHandler {
       for (const m of Methods) {
         if (m === req.method && m in handler) {
           const ret = await callHandler(handler[m]!)
-          return res.status(200).json(ret)
+          if (!!ret) {
+            return res.status(200).json(ret)
+          }
         }
       }
       if ('DEFAULT' in handler) {
         const ret = await callHandler(handler['DEFAULT']!)
-        return res.status(200).json(ret)
+        if (!!ret) {
+          return res.status(200).json(ret)
+        }
       }
       return res.status(405).json({
         code: 405,
