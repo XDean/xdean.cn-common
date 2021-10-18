@@ -1,4 +1,4 @@
-import {default as mysql} from 'serverless-mysql'
+import {default as mysql} from 'serverless-mysql';
 
 export const database = mysql({
   config: {
@@ -8,4 +8,5 @@ export const database = mysql({
     user: process.env.MYSQL_USERNAME,
     password: process.env.MYSQL_PASSWORD,
   },
-})
+  onError: console.log,
+});
