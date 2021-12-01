@@ -8,14 +8,19 @@ function getWindowDimensions() {
       innerHeight: 0,
       outerWidth: 0,
       outerHeight: 0,
+      clientWidth: 0,
+      clientHeight: 0,
     };
   }
   const {innerWidth, innerHeight, outerHeight, outerWidth} = window;
+  const {clientWidth, clientHeight} = document.documentElement;
   return {
     innerWidth,
     innerHeight,
     outerWidth,
     outerHeight,
+    clientWidth,
+    clientHeight,
   };
 }
 
@@ -25,6 +30,7 @@ export default function useWindowDimensions() {
   useEffect(() => {
     const handleResize = () => setWindowDimensions(getWindowDimensions());
     window.addEventListener('resize', handleResize);
+    handleResize();
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
