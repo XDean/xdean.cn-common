@@ -1,8 +1,7 @@
 import clsx from 'clsx';
 import css from './Pagination.module.css';
 import Link from 'next/link';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faAngleDoubleLeft, faAngleDoubleRight} from '@fortawesome/free-solid-svg-icons';
+import {FaAngleDoubleLeft, FaAngleDoubleRight} from 'react-icons/fa';
 
 type Props = {
   totalPage: number
@@ -25,7 +24,7 @@ export const Pagination = (props: Props) => {
     <nav className="relative flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
       <Link href={pageLink(0)}>
         <a className={clsx(css.first, css.link)} title={'第一页'}>
-          <FontAwesomeIcon icon={faAngleDoubleLeft}/>
+          <FaAngleDoubleLeft/>
         </a>
       </Link>
       {page > visiblePage && (
@@ -60,7 +59,7 @@ export const Pagination = (props: Props) => {
       )}
       <Link href={pageLink(totalPage - 1)}>
         <a className={clsx(css.link, css.last)}>
-          <FontAwesomeIcon icon={faAngleDoubleRight}/>
+          <FaAngleDoubleRight/>
         </a>
       </Link>
     </nav>

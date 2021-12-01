@@ -1,6 +1,5 @@
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faGithub} from '@fortawesome/free-brands-svg-icons';
 import {Icon} from './Icon';
+import {FaGithub} from 'react-icons/fa';
 
 type Props = {
   className?: string
@@ -12,7 +11,7 @@ type Props = {
 export const GithubIcon = (props: Props) => {
   const {repo, user = 'XDean', codePath} = props;
   return <Icon alt={'Github'}
-               icon={width => <FontAwesomeIcon icon={faGithub} style={{fontSize: width}}/>}
+               icon={width => <FaGithub size={width}/>}
                rounded
                link={`https://github.com/${user}/${repo}` + (codePath ? '/blob/main' + codePath : '')}
                ring
