@@ -1,6 +1,6 @@
-import NextImage, {ImageProps} from 'next/image'
-import clsx from "clsx";
-import {useRouter} from "next/router";
+import NextImage, {ImageProps} from 'next/image';
+import clsx from 'clsx';
+import {useRouter} from 'next/router';
 
 type Props = Omit<ImageProps, 'width' | 'src'> & {
   maxWidth?: number | string
@@ -14,15 +14,15 @@ export const Image = (props: Props) => {
     width,
     className,
     ...rest
-  } = props
-  const router = useRouter()
+  } = props;
+  const router = useRouter();
   const routerLoading = router && router.query._image_loading;
-  const loading = (routerLoading === 'lazy' || routerLoading === 'eager') ? routerLoading : undefined
+  const loading = (routerLoading === 'lazy' || routerLoading === 'eager') ? routerLoading : undefined;
   return (
     <div style={{maxWidth: maxWidth, width: width}} className={clsx('image-wrapper', className)}>
-      <NextImage layout={"responsive"} loading={loading} {...rest}/>
+      <NextImage layout={'responsive'} loading={loading} {...rest}/>
     </div>
-  )
-}
+  );
+};
 
-export default Image
+export default Image;

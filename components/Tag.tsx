@@ -1,4 +1,4 @@
-import clsx from 'clsx'
+import clsx from 'clsx';
 
 type Props = {
   text: string
@@ -6,7 +6,7 @@ type Props = {
 }
 
 export const Tag = (props: Props) => {
-  const {text, className} = props
+  const {text, className} = props;
   return (
     <div
       className={clsx('text-sm inline-flex items-center leading-sm px-2 py-0.5 rounded-full',
@@ -14,5 +14,5 @@ export const Tag = (props: Props) => {
         className)}>
       {text}
     </div>
-  )
-}
+  );
+};

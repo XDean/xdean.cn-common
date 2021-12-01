@@ -1,20 +1,20 @@
-import React, {useState} from "react";
-import {Badge} from "./Badge";
+import React, {useState} from 'react';
+import {Badge} from './Badge';
 
 type Props = {
   url: string
 }
 
 export const Print = (props: Props) => {
-  const {url} = props
-  const [running, setRunning] = useState(false)
+  const {url} = props;
+  const [running, setRunning] = useState(false);
   const onPrint = () => {
-    setRunning(true)
-    const iframe = document.createElement("iframe");
+    setRunning(true);
+    const iframe = document.createElement('iframe');
 
     function closePrint() {
       document.body.removeChild(iframe);
-      setRunning(false)
+      setRunning(false);
     }
 
     function setPrint() {
@@ -27,15 +27,15 @@ export const Print = (props: Props) => {
     }
 
     iframe.onload = setPrint;
-    iframe.style.position = "fixed";
-    iframe.style.right = "0";
-    iframe.style.bottom = "0";
-    iframe.style.width = "0";
-    iframe.style.height = "0";
-    iframe.style.border = "0";
+    iframe.style.position = 'fixed';
+    iframe.style.right = '0';
+    iframe.style.bottom = '0';
+    iframe.style.width = '0';
+    iframe.style.height = '0';
+    iframe.style.border = '0';
     iframe.src = url;
     document.body.appendChild(iframe);
-  }
+  };
 
   return (
     <Badge left={'🖨️ 打印'}
@@ -43,5 +43,5 @@ export const Print = (props: Props) => {
            onLeftClick={onPrint}
            loading={running}
     />
-  )
-}
+  );
+};

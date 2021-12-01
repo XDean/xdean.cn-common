@@ -5,7 +5,7 @@
 .toc li a {
     @apply transition transform duration-500 ease-out translate-x-0;
     @apply inline-block text-gray-500 antialiased;
-    @apply  hover:underline hover:text-gray-900;
+    @apply hover:underline hover:text-gray-900;
 }
 
 .toc li.visible > a {

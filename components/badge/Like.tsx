@@ -1,5 +1,5 @@
-import React from "react";
-import {Badge} from "./Badge";
+import React from 'react';
+import {Badge} from './Badge';
 
 type Props = {
   like?: boolean
@@ -9,7 +9,7 @@ type Props = {
 }
 
 export const Like = (props: Props) => {
-  const {like = false, total = 0, loading, onLike} = props
+  const {like = false, total = 0, loading, onLike} = props;
 
   return (
     <Badge left={`❤️ ${like ? '已喜欢' : '喜欢'}`}
@@ -17,5 +17,5 @@ export const Like = (props: Props) => {
            loading={loading}
            onLeftClick={onLike}
            tooltip={like ? '取消喜欢' : '喜欢'}/>
-  )
-}
+  );
+};

@@ -1,12 +1,12 @@
-import Image from "./Image";
-import xdeanLogo from "../resources/logo.ico";
+import Image from './Image';
+import xdeanLogo from '../resources/logo.ico';
 
 type Props = {
   width?: number
 }
 
 export const XDeanIcon = (props: Props) => {
-  const {width = 36} = props
+  const {width = 36} = props;
   return (
     <a target={'_blank'}
        href={'https://xdean.cn'}
@@ -14,5 +14,5 @@ export const XDeanIcon = (props: Props) => {
     >
       <Image src={xdeanLogo} alt={'XDean Logo'} width={width}/>
     </a>
-  )
-}
+  );
+};

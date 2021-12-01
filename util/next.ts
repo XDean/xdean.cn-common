@@ -1,3 +1,3 @@
 export function isSSR() {
-  return typeof window === 'undefined'
+  return typeof window === 'undefined';
 }

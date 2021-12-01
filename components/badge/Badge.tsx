@@ -1,6 +1,6 @@
-import React, {ReactNode} from "react";
-import clsx from "clsx";
-import {Loading} from "../Loading";
+import React, {ReactNode} from 'react';
+import clsx from 'clsx';
+import {Loading} from '../Loading';
 
 type Props = {
   left: ReactNode
@@ -12,14 +12,14 @@ type Props = {
 }
 
 export const Badge = (props: Props) => {
-  const {left, right, tooltip, loading, onLeftClick, onRightClick} = props
+  const {left, right, tooltip, loading, onLeftClick, onRightClick} = props;
   return (
     <div className={clsx('inline-flex border border-gray-300 rounded items-center justify-center shadow')}
          title={tooltip}
     >
       <div
         className={clsx('p-1 font-sans transition duration-300',
-          onLeftClick && 'cursor-pointer hover:bg-gray-200'
+          onLeftClick && 'cursor-pointer hover:bg-gray-200',
         )}
         onClick={onLeftClick}
       >
@@ -28,7 +28,7 @@ export const Badge = (props: Props) => {
       {(loading || right !== undefined) && (
         <div
           className={clsx('pl-2 pr-2 py-1 border-l',
-            onRightClick && 'cursor-pointer hover:bg-gray-200'
+            onRightClick && 'cursor-pointer hover:bg-gray-200',
           )}
           onClick={onRightClick}
         >
@@ -36,5 +36,5 @@ export const Badge = (props: Props) => {
         </div>
       )}
     </div>
-  )
-}
+  );
+};

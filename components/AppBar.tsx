@@ -1,7 +1,7 @@
-import React, {ReactNode} from "react";
-import {XDeanIcon} from "./XDeanIcon";
-import {GithubIcon} from "./GithubIcon";
-import Link from "next/link";
+import React, {ReactNode} from 'react';
+import {XDeanIcon} from './XDeanIcon';
+import {GithubIcon} from './GithubIcon';
+import Link from 'next/link';
 
 
 type Props = {
@@ -11,7 +11,7 @@ type Props = {
 }
 
 export const AppBar = (props: Props) => {
-  const {icon, title, repo} = props
+  const {icon, title, repo} = props;
   return (
     <div className={'w-full shadow-md p-2 border-b bg-white z-10 flex flex-row items-center'}>
       <div className={'flex flex-row items-center justify-center'}>
@@ -28,5 +28,5 @@ export const AppBar = (props: Props) => {
         <GithubIcon repo={repo}/>
       </div>
     </div>
-  )
-}
+  );
+};

@@ -1,5 +1,5 @@
-import React, {PropsWithChildren, useEffect, useRef} from "react";
-import css from './ProgressToc.module.css'
+import React, {PropsWithChildren, useEffect, useRef} from 'react';
+import css from './ProgressToc.module.css';
 
 type TocItem = {
   listItem: HTMLLIElement
@@ -12,42 +12,42 @@ type TocItem = {
 // See https://github.com/hakimel/css/tree/master/progress-nav
 // children must be list
 export const ProgressToc = ({children}: PropsWithChildren<{}>) => {
-  const tocRef = useRef<HTMLDivElement>(null)
-  const pathRef = useRef<SVGPathElement>(null)
+  const tocRef = useRef<HTMLDivElement>(null);
+  const pathRef = useRef<SVGPathElement>(null);
 
   useEffect(() => {
     if (!tocRef.current || !pathRef.current) {
-      return
+      return;
     }
-    const toc = tocRef.current
-    const tocPath = pathRef.current
+    const toc = tocRef.current;
+    const tocPath = pathRef.current;
 
-    let tocItems: TocItem[]
-    let pathLength: number
-    let lastPathStart: number
-    let lastPathEnd: number
+    let tocItems: TocItem[];
+    let pathLength: number;
+    let lastPathStart: number;
+    let lastPathEnd: number;
 
     function drawPath() {
       tocItems = Array.from(toc.querySelectorAll('li'))
         .map(item => {
-          const anchor = item.querySelector('a')!
-          const target = document.getElementById(decodeURI(anchor.getAttribute('href')!).slice(1))!
+          const anchor = item.querySelector('a')!;
+          const target = document.getElementById(decodeURI(anchor.getAttribute('href')!).slice(1))!;
           return {
             listItem: item,
             anchor: anchor,
             target: target,
             pathStart: 0,
             pathEnd: 0,
-          } as TocItem
+          } as TocItem;
         })
-        .filter(item => !!item.target)
-      const path: (string | number)[] = []
-      let pathIndent: number
+        .filter(item => !!item.target);
+      const path: (string | number)[] = [];
+      let pathIndent: number;
 
       tocItems.forEach((item, i) => {
-        const x = item.listItem.offsetLeft - 5
-        const y = item.listItem.offsetTop
-        const height = item.listItem.offsetHeight
+        const x = item.listItem.offsetLeft - 5;
+        const y = item.listItem.offsetTop;
+        const height = item.listItem.offsetHeight;
 
         if (i === 0) {
           path.push('M', x, y, 'L', x, y + height);
@@ -62,19 +62,19 @@ export const ProgressToc = ({children}: PropsWithChildren<{}>) => {
         pathIndent = x;
         tocPath.setAttribute('d', path.join(' '));
         item.pathEnd = tocPath.getTotalLength();
-      })
-      pathLength = tocPath.getTotalLength()
-      sync()
+      });
+      pathLength = tocPath.getTotalLength();
+      sync();
     }
 
     function sync() {
       const windowHeight = window.innerHeight;
 
-      let pathStart = pathLength
-      let pathEnd = 0
+      let pathStart = pathLength;
+      let pathEnd = 0;
 
-      let visibleItems = 0
-      let lastItem
+      let visibleItems = 0;
+      let lastItem;
 
       function activateItem(item: TocItem) {
         pathStart = Math.min(item.pathStart, pathStart);
@@ -90,19 +90,19 @@ export const ProgressToc = ({children}: PropsWithChildren<{}>) => {
       tocItems.forEach((item, i) => {
         const targetBounds = item.target.getBoundingClientRect();
         if (targetBounds.bottom > 0 && targetBounds.top < windowHeight) {
-          activateItem(item)
+          activateItem(item);
           if (i > 0 && targetBounds.top > windowHeight * 0.2) {
-            activateItem(tocItems[i - 1])
+            activateItem(tocItems[i - 1]);
           }
         } else {
-          deactivateItem(item)
+          deactivateItem(item);
           if (targetBounds.top < windowHeight) {
-            lastItem = item
+            lastItem = item;
           }
         }
       });
       if (visibleItems == 0 && !!lastItem) {
-        activateItem(lastItem)
+        activateItem(lastItem);
       }
       if (visibleItems > 0 && pathStart < pathEnd) {
         if (pathStart !== lastPathStart || pathEnd !== lastPathEnd) {
@@ -123,10 +123,10 @@ export const ProgressToc = ({children}: PropsWithChildren<{}>) => {
 
     drawPath();
     return () => {
-      window.removeEventListener('resize', drawPath, false)
-      window.removeEventListener('scroll', sync, false)
-    }
-  }, [tocRef, pathRef])
+      window.removeEventListener('resize', drawPath, false);
+      window.removeEventListener('scroll', sync, false);
+    };
+  }, [tocRef, pathRef]);
 
   return (
     <nav className={css.toc}>
@@ -147,5 +147,5 @@ export const ProgressToc = ({children}: PropsWithChildren<{}>) => {
               transform="translate(-0.5, -0.5)"/>
       </svg>
     </nav>
-  )
-}
+  );
+};

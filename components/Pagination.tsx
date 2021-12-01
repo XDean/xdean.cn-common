@@ -1,8 +1,8 @@
-import clsx from 'clsx'
-import css from './Pagination.module.css'
-import Link from 'next/link'
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faAngleDoubleLeft, faAngleDoubleRight} from "@fortawesome/free-solid-svg-icons";
+import clsx from 'clsx';
+import css from './Pagination.module.css';
+import Link from 'next/link';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {faAngleDoubleLeft, faAngleDoubleRight} from '@fortawesome/free-solid-svg-icons';
 
 type Props = {
   totalPage: number
@@ -17,9 +17,9 @@ export const Pagination = (props: Props) => {
     pageLink,
     page = 0,
     visiblePage = 2,
-  } = props
+  } = props;
   if (visiblePage * 2 + 3 > totalPage) {
-    visiblePage = totalPage
+    visiblePage = totalPage;
   }
   return (
     <nav className="relative flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
@@ -64,5 +64,5 @@ export const Pagination = (props: Props) => {
         </a>
       </Link>
     </nav>
-  )
-}
+  );
+};
