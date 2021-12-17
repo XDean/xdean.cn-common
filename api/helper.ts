@@ -33,7 +33,7 @@ export const createHelper = (req: NextApiRequest, res: NextApiResponse): Helper 
     if (!userId) {
       const uuid = randomInt(2 << 30 - 1);
       this.setCookie('userId', uuid, {
-        domain: 'xdean.cn',
+        domain: process.env.DOMAIN || 'xdean.cn',
         expires: new Date(253402300000000),
       });
       return uuid;
