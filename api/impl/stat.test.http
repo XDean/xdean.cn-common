@@ -1,0 +1,9 @@
+GET http://localhost:3000/api/batch_state
+Content-Type: application/json
+
+{
+  "postIds": [
+    "2021/idea-usage/index.mdx",
+    "2021/tax/index.mdx"
+  ]
+}
