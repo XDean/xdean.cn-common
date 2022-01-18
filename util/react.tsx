@@ -9,3 +9,5 @@ export function notSSR<T, >(Comp: ComponentType<T>): FunctionComponent<T> {
     }
   };
 }
+
+export type PropsOf<T extends FunctionComponent> = Parameters<T>[0]
