@@ -4,28 +4,47 @@ export function smoothScroll(params: {
   element: Element
   from?: number
   to: number
-  onDone?: () => void
+  onFinal?: () => void
   duration?: number
+  stepFunc?: (from: number, to: number, ratio: number) => number
 }) {
   let taskId: Timeout;
   const {
     element,
     from = element.scrollTop,
     to,
-    onDone = () => null,
+    onFinal = () => null,
     duration = 400,
+    stepFunc = (f, t, r) => f + (t - f) * r,
   } = params;
-  const frameMillis = 20;
-  const step = duration / frameMillis;
-  const each = (to - from) / step;
+  const frameMillis = 10;
+  const step = Math.floor(duration / frameMillis);
+  let currentPos = 0;
   const scrollStep = (i: number) => {
-    element.scrollTo({top: from + each * i});
+    currentPos = Math.round(stepFunc(from, to, i / step));
+    element.scrollTo({top: currentPos});
     if (i < step) {
       taskId = setTimeout(() => scrollStep(i + 1), frameMillis);
     } else {
-      onDone();
+      onFinal();
     }
   };
+  const listener = ev => {
+    if (element.scrollTop !== currentPos) {
+      clearTimeout(taskId);
+      element.removeEventListener('scroll', listener);
+      onFinal();
+    }
+  };
+  element.addEventListener('scroll', listener);
   taskId = setTimeout(() => scrollStep(0), frameMillis);
-  return () => clearTimeout(taskId);
+  return () => {
+    clearTimeout(taskId);
+    element.removeEventListener('scroll', listener);
+    onFinal();
+  };
+}
+
+export function easeInOut(from: number, to: number, ratio: number) {
+  return from + (to - from) * (1 - (Math.cos(Math.PI * ratio) + 1) / 2);
 }
