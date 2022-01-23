@@ -1,7 +1,7 @@
 import Timeout = NodeJS.Timeout;
 
 export function smoothScroll(params: {
-  element: Element
+  element: Element | Window
   from?: number
   to: number
   onFinal?: () => void
@@ -11,7 +11,7 @@ export function smoothScroll(params: {
   let taskId: Timeout;
   const {
     element,
-    from = element.scrollTop,
+    from = 'scrollTop' in element ? element.scrollTop : element.scrollY,
     to,
     onFinal = () => null,
     duration = 400,
@@ -30,7 +30,7 @@ export function smoothScroll(params: {
     }
   };
   const listener = ev => {
-    if (element.scrollTop !== currentPos) {
+    if ('scrollTop' in element ? element.scrollTop : element.scrollY !== currentPos) {
       clearTimeout(taskId);
       element.removeEventListener('scroll', listener);
       onFinal();
