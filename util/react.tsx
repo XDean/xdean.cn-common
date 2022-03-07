@@ -1,4 +1,4 @@
-import {ComponentType, FunctionComponent} from 'react';
+import { ComponentType, FunctionComponent, ReactNode } from 'react';
 
 export function notSSR<T, >(Comp: ComponentType<T>): FunctionComponent<T> {
   return (props: T) => {
@@ -10,4 +10,4 @@ export function notSSR<T, >(Comp: ComponentType<T>): FunctionComponent<T> {
   };
 }
 
-export type PropsOf<T extends FunctionComponent> = Parameters<T>[0]
+export type PropsOf<T extends (...args: any[]) => ReactNode> = Parameters<T>[0]
