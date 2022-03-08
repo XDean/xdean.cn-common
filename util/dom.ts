@@ -7,6 +7,7 @@ export function smoothScroll(params: {
   onFinal?: () => void
   duration?: number
   stepFunc?: (from: number, to: number, ratio: number) => number
+  force?: boolean
 }) {
   let taskId: Timeout;
   const {
@@ -15,7 +16,8 @@ export function smoothScroll(params: {
     to,
     onFinal = () => null,
     duration = 400,
-    stepFunc = (f, t, r) => f + (t - f) * r,
+    stepFunc = easeInOut,
+    force = false,
   } = params;
   const frameMillis = 10;
   const step = Math.floor(duration / frameMillis);
@@ -30,7 +32,7 @@ export function smoothScroll(params: {
     }
   };
   const listener = ev => {
-    if (Math.abs(('scrollTop' in element ? element.scrollTop : element.scrollY) - currentPos) > 1) {
+    if (!force && Math.abs(('scrollTop' in element ? element.scrollTop : element.scrollY) - currentPos) > 1) {
       clearTimeout(taskId);
       element.removeEventListener('scroll', listener);
       onFinal();
@@ -47,4 +49,21 @@ export function smoothScroll(params: {
 
 export function easeInOut(from: number, to: number, ratio: number) {
   return from + (to - from) * (1 - (Math.cos(Math.PI * ratio) + 1) / 2);
+}
+
+export function windowSmoothScroll(params: {
+  el: Element
+  duration?: number
+  stepFunc?: (from: number, to: number, ratio: number) => number
+  force?: boolean
+}) {
+  const {el, duration = 500, stepFunc = easeInOut, force = false} = params;
+  return smoothScroll({
+    element: window,
+    from: window.scrollY,
+    to: window.scrollY + el.getBoundingClientRect().y,
+    duration: duration,
+    stepFunc: stepFunc,
+    force: force,
+  });
 }
