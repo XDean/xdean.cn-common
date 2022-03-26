@@ -10,6 +10,14 @@ export function range(start: number, end: number) {
   return Array.from(new Array(end - start).keys()).map(e => e + start);
 }
 
+export function random<T>(arr: T[], except: T[] = []): T {
+  while (true) {
+    const v = arr[Math.floor(Math.random() * arr.length)];
+    if (except.indexOf(v) === -1) {
+      return v;
+    }
+  }
+}
 
 export function contentEquals<T>(
   a: T[], b: T[],

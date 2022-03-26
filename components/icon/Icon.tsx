@@ -1,8 +1,9 @@
-import Image from '../Image';
-import useWindowDimensions from '../../util/hook';
-import {ImageProps} from 'next/image';
 import clsx from 'clsx';
+import {ImageProps} from 'next/image';
+import Link from 'next/link';
 import {HTMLAttributeAnchorTarget, ReactElement} from 'react';
+import useWindowDimensions from '../../util/hook';
+import Image from '../Image';
 
 export type IconProps = {
   width?: number
@@ -38,7 +39,8 @@ export const Icon = (props: IconProps) => {
                                                alt={alt}
                                                width={width}/>;
   const wrapper = (
-    <div className={clsx(rounded && 'rounded-full overflow-hidden',
+    <div className={clsx('inline-block',
+      rounded && 'rounded-full overflow-hidden',
       ring && 'leading-[0px] hover:ring-2 transition',
       className)}>
       {iconComp}
@@ -46,11 +48,12 @@ export const Icon = (props: IconProps) => {
   );
   if (link) {
     return (
-      <a target={linkTarget}
-         href={link}
-      >
-        {wrapper}
-      </a>
+      <Link href={link}>
+        <a target={linkTarget}
+           href={link}>
+          {wrapper}
+        </a>
+      </Link>
     );
   } else {
     return wrapper;
