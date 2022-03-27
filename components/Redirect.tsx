@@ -8,7 +8,7 @@ type Props = {
 }
 
 export const Redirect = (props: Props) => {
-  const {text, url, delay} = props;
+  const {text, url, delay = 0} = props;
   const [time, setTime] = useState(delay);
 
   const interval = useInterval(() => setTime(t => t - 100), 100);
