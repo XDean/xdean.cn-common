@@ -1,0 +1,17 @@
+@import "~github-markdown-css/github-markdown.css";
+
+.markdown-body ol {
+    @apply list-decimal;
+}
+
+.markdown-body ul {
+    @apply list-disc;
+}
+
+.markdown-body pre {
+    @apply w-full;
+}
+
+.markdown-body > .image-wrapper {
+    @apply my-6;
+}

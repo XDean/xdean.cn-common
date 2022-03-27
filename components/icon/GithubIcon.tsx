@@ -1,5 +1,5 @@
-import {Icon} from './Icon';
-import {FaGithub} from 'react-icons/fa';
+import { FaGithub } from 'react-icons/fa';
+import { Icon } from './Icon';
 
 type Props = {
   className?: string

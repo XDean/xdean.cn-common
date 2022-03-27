@@ -6,10 +6,8 @@ type Props = {
 export const Footer = (props: Props) => {
   const {className} = props;
   return (
-    <div className={clsx('mb-8 border-t text-center', className)}>
-      <div className={'text-sm mt-1'}>
-        Copyright © 2020-{new Date().getFullYear()} Dean Xu. All Rights reserved.
-      </div>
+    <div className={clsx('mb-2 border-t text-center text-gray-600 text-sm pt-0.5', className)}>
+      Copyright © 2020-{new Date().getFullYear()} Dean Xu. All Rights reserved.
     </div>
   );
 };
