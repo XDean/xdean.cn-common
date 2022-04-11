@@ -9,7 +9,7 @@ export const IconButton: FC<Props> = (props) => {
     <div
       {...rest}
       className={clsx(
-        'cursor-pointer rounded-full p-1 select-none',
+        'cursor-pointer rounded-full p-[1px] lg:p-1 select-none',
         'bg-white text-gray-600 hover:bg-gray-600 hover:text-white transition',
         className)}
     >
