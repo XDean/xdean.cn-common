@@ -6,6 +6,7 @@ import {apiError} from './handler';
 
 export type Helper = {
   museQuery(name: string, defaultValue?: string): string
+  museQueryJoin(name: string, sep?: string): string
   setCookie(name: string, value: unknown, options?: CookieSerializeOptions): void
   deleteCookie(name: string): void
   getUserId(): number
@@ -20,6 +21,16 @@ export const createHelper = (req: NextApiRequest, res: NextApiResponse): Helper 
       return defaultValue;
     } else {
       throw apiError(400, `required query parameter "${name}" not exist`);
+    }
+  },
+  museQueryJoin(name: string, sep: string = '/'): string {
+    const value = req.query[name];
+    if (value === undefined) {
+      throw apiError(400, `required query parameter "${name}" not exist`);
+    } else if (typeof value === 'string') {
+      return value;
+    } else {
+      return value.join(sep);
     }
   },
   setCookie(name: string, value: unknown, options: CookieSerializeOptions = {}) {
