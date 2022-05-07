@@ -31,7 +31,7 @@ export function smoothScroll(params: {
       onFinal();
     }
   };
-  const listener = ev => {
+  const listener = () => {
     if (!force && Math.abs(('scrollTop' in element ? element.scrollTop : element.scrollY) - currentPos) > 1) {
       clearTimeout(taskId);
       element.removeEventListener('scroll', listener);

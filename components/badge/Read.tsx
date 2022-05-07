@@ -16,7 +16,7 @@ export const Read = (props: Props) => {
     <Badge left={`👋 ‍️${name}`}
            right={total}
            loading={loading}
-           tooltip={'${name}量'}/>
+           tooltip={`${name}量`}/>
   );
 };
 
