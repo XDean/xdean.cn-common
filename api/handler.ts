@@ -21,7 +21,7 @@ export function apiError(code: number, message: string, body?: any) {
   } as ApiError;
 }
 
-type Handler<T = any> = (params: { req: NextApiRequest, res: NextApiResponse<T>, helper: Helper }) => void | T | Promise<T>
+type Handler<T = any> = (params: {req: NextApiRequest, res: NextApiResponse<T>, helper: Helper}) => void | T | Promise<T>
 
 type Options<T> = {
   handler: {
@@ -64,7 +64,10 @@ export function apiHandler<T>(options: Options<T>): NextApiHandler {
         const ae = e as ApiError;
         return res.status(ae.code).json(ae.body);
       } else {
-        throw e;
+        return res.status(500).json({
+          error: e.toString(),
+          stack: e.stack,
+        });
       }
     }
   };
