@@ -6,7 +6,11 @@ export async function toArray<T>(iterator: AsyncGenerator<T>) {
   return arr;
 }
 
-export function range(start: number, end: number) {
+export function range(start: number, end?: number) {
+  if (end === undefined) {
+    end = start;
+    start = 0;
+  }
   return Array.from(new Array(end - start).keys()).map(e => e + start);
 }
 

@@ -1,5 +1,5 @@
-import {useState, useEffect, useRef} from 'react';
-import {isSSR} from './next';
+import { useState, useEffect, useRef, useCallback, useLayoutEffect } from 'react';
+import { isSSR } from './next';
 
 function getWindowDimensions() {
   if (isSSR()) {
@@ -62,4 +62,46 @@ export function useInterval(fn: () => void, interval: number) {
   };
 
   return {start, stop, toggle, active};
+}
+
+export function useSingle<T>(init: () => T): T {
+  const value = useRef<T>();
+  const first = useRef(true);
+  if (first) {
+    first.current = false;
+    value.current = init();
+  }
+  return value.current as T;
+}
+
+export function useFunction<T extends Function>(handler: T): T {
+  const handlerRef = useRef(handler);
+
+  useLayoutEffect(() => {
+    handlerRef.current = handler;
+  });
+
+  return useCallback((...args: any[]) => handlerRef.current(...args), []) as any as T;
+}
+
+export function useAnimationFrame(render: () => (delta: number, timestamp: number) => void) {
+  const renderFn = useFunction(render);
+  useEffect(() => {
+    let animationHandle = -1;
+    const frameFn = renderFn();
+    let lastTime = -1;
+    const frame = (timestamp: number) => {
+      if (lastTime === -1) {
+        frameFn(0, timestamp);
+      } else {
+        frameFn(timestamp - lastTime, timestamp);
+      }
+      lastTime = timestamp;
+      animationHandle = requestAnimationFrame(frame);
+    };
+    animationHandle = requestAnimationFrame(frame);
+    return () => {
+      cancelAnimationFrame(animationHandle);
+    };
+  }, []);
 }
