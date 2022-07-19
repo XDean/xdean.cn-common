@@ -1,3 +1,5 @@
+import { range } from './array';
+
 export function randomDate(start: Date, duration: number) {
   return new Date(start.getTime() + Math.random() * duration);
 }
@@ -33,7 +35,7 @@ export function randomOne<T>(...vs: T[]): T {
   return vs[randomInt(vs.length)];
 }
 
-export function randomOneWithWeight<T>(...vs: {value: T, w: number}[]): T {
+export function randomOneWithWeight<T>(...vs: { value: T, w: number }[]): T {
   const sum = vs.map((e) => e.w).reduce((a, b) => a + b);
   const ran = randomFloat(sum);
   let cur = 0;
@@ -44,4 +46,15 @@ export function randomOneWithWeight<T>(...vs: {value: T, w: number}[]): T {
     }
   }
   return vs[vs.length - 1].value;
+}
+
+export function randomSub<T>(arr: T[], len: number): T[] {
+  const left: T[] = [...arr];
+  const res: T[] = [];
+  range(len).forEach(() => {
+    const select = randomInt(left.length);
+    res.push(left[select]);
+    left.splice(select, 1);
+  });
+  return res;
 }

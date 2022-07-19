@@ -16,4 +16,10 @@ export type Data<T> =
   { type: 'null' }
   | { type: 'loading' }
   | { type: 'ready', value: T }
-  | { type: 'error', error: string }
+  | { type: 'error', error: string };
+
+export function caseNever<T>(_: never): T {
+  throw new Error('case should never reach');
+}
+
+
