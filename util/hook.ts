@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useCallback, useLayoutEffect } from 'react';
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { isSSR } from './next';
 
 function getWindowDimensions() {
@@ -84,11 +84,10 @@ export function useFunction<T extends Function>(handler: T): T {
   return useCallback((...args: any[]) => handlerRef.current(...args), []) as any as T;
 }
 
-export function useAnimationFrame(render: () => (delta: number, timestamp: number) => void) {
-  const renderFn = useFunction(render);
+export function useAnimationFrame(frame: (delta: number, timestamp: number) => void) {
+  const frameFn = useFunction(frame)
   useEffect(() => {
     let animationHandle = -1;
-    const frameFn = renderFn();
     let lastTime = -1;
     const frame = (timestamp: number) => {
       if (lastTime === -1) {

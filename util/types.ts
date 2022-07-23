@@ -1,0 +1,1 @@
+export type Tuple<E, N extends number, T extends E[] = []> = N extends T['length'] ? T : Tuple<E, N, [...T, E]>
