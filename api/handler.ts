@@ -1,5 +1,6 @@
-import {NextApiHandler, NextApiRequest, NextApiResponse} from 'next/dist/shared/lib/utils';
-import {createHelper, Helper} from './helper';
+import { NextApiHandler, NextApiRequest, NextApiResponse } from 'next/dist/shared/lib/utils';
+import { createHelper, Helper } from './helper';
+import { ZodError } from 'zod';
 
 const Methods = ['GET', 'POST', 'DELETE', 'PATCH'] as const;
 type Method = typeof Methods[number] | 'DEFAULT'
@@ -21,7 +22,7 @@ export function apiError(code: number, message: string, body?: any) {
   } as ApiError;
 }
 
-type Handler<T = any> = (params: {req: NextApiRequest, res: NextApiResponse<T>, helper: Helper}) => void | T | Promise<T>
+type Handler<T = any> = (params: { req: NextApiRequest, res: NextApiResponse<T>, helper: Helper }) => void | T | Promise<T>
 
 type Options<T> = {
   handler: {
@@ -63,6 +64,12 @@ export function apiHandler<T>(options: Options<T>): NextApiHandler {
       if ('type' in e && e.type === 'ApiError') {
         const ae = e as ApiError;
         return res.status(ae.code).json(ae.body);
+      } else if (e instanceof ZodError) {
+        return res.status(400).json({
+          error: 'bad request',
+          message: e.message,
+          issues: e.issues,
+        });
       } else {
         return res.status(500).json({
           error: e.toString(),
