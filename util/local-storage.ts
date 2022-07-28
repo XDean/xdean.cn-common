@@ -1,5 +1,6 @@
 import { z, ZodError, ZodTypeDef } from 'zod';
 import useSWR, { mutate } from 'swr';
+import produce from 'immer';
 
 export class LocalStorage<T> {
   private value: T;
@@ -36,7 +37,7 @@ export class LocalStorage<T> {
     if (p.success) {
       return p.data;
     } else {
-      console.warn('wrong local storage value, use default value.', str, p.error);
+      console.error(`wrong local storage value ${this.key}`, str, p.error);
       return this.defaultValue;
     }
   };
@@ -47,7 +48,13 @@ export class LocalStorage<T> {
       this.value = t;
       localStorage.setItem(this.key, JSON.stringify(t));
       mutate(this.swrKey, t);
+    } else {
+      console.error(`fail to set local storage ${this.key}`, p.error);
     }
+  };
+
+  update = (update: (t: T) => void) => {
+    this.set(produce(this.get(), update));
   };
 
   use = (): [T, (t: T) => void] => {
