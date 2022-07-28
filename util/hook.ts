@@ -85,7 +85,7 @@ export function useFunction<T extends Function>(handler: T): T {
 }
 
 export function useAnimationFrame(frame: (delta: number, timestamp: number) => void) {
-  const frameFn = useFunction(frame)
+  const frameFn = useFunction(frame);
   useEffect(() => {
     let animationHandle = -1;
     let lastTime = -1;

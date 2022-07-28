@@ -1,4 +1,5 @@
-import {z} from 'zod';
+import { z } from 'zod';
+import { stringToBoolean } from './base';
 
 export const zex = {
   str: {
@@ -20,6 +21,9 @@ export const zex = {
         .refine((e) => Number.isSafeInteger(Number(e)), 'not valid int string')
         .transform<number>((e) => Number(e)),
     ]),
-    boolean: z.string().transform<boolean>(s => stringToBoolean(s)).or(z.boolean()),
+    boolean: z.union([
+      z.boolean(),
+      z.string().transform<boolean>(s => stringToBoolean(s)),
+    ]),
   },
 };
