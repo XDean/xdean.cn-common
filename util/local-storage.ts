@@ -1,5 +1,5 @@
-import { z, ZodError, ZodTypeDef } from 'zod';
-import useSWR, { mutate } from 'swr';
+import {z, ZodError, ZodTypeDef} from 'zod';
+import useSWR, {mutate} from 'swr';
 import produce from 'immer';
 
 export class LocalStorage<T> {
@@ -29,6 +29,9 @@ export class LocalStorage<T> {
   };
 
   private getRaw = () => {
+    if (typeof localStorage === 'undefined') {
+      return this.defaultValue;
+    }
     const str = localStorage.getItem(this.key);
     if (str === null) {
       return this.defaultValue;

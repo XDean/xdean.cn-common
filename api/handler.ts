@@ -24,13 +24,13 @@ export function apiError(code: number, message: string, body?: any) {
 
 type Handler<T = any> = (params: { req: NextApiRequest, res: NextApiResponse<T>, helper: Helper }) => void | T | Promise<T>
 
-type Options<T> = {
+type Options = {
   handler: {
-    [key in Method]?: Handler<T>
+    [key in Method]?: Handler
   }
 }
 
-export function apiHandler<T>(options: Options<T>): NextApiHandler {
+export function apiHandler(options: Options): NextApiHandler {
   const {handler} = options;
   return async (req, res) => {
     const helper = createHelper(req, res);
@@ -61,6 +61,7 @@ export function apiHandler<T>(options: Options<T>): NextApiHandler {
         support: Object.keys(handler),
       });
     } catch (e: any) {
+      const stack = req.query.stack !== undefined;
       if ('type' in e && e.type === 'ApiError') {
         const ae = e as ApiError;
         return res.status(ae.code).json(ae.body);
@@ -69,6 +70,7 @@ export function apiHandler<T>(options: Options<T>): NextApiHandler {
           error: 'bad request',
           message: e.message,
           issues: e.issues,
+          stack: stack ? e.stack : undefined,
         });
       } else {
         return res.status(500).json({

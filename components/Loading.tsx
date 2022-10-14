@@ -14,6 +14,6 @@ export const Loading = ({className}: { className?: string }) => {
 
 export const FullScreenLoading = () => (
   <div className={'full flex flex-col items-center justify-center'}>
-    <Loading className={'w-16 h-16 text-blue-600'}/>
+    <Loading className={'w-12 h-12 text-blue-600'}/>
   </div>
 );

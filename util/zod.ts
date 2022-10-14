@@ -1,5 +1,6 @@
-import { z } from 'zod';
-import { stringToBoolean } from './base';
+import {z, ZodDefault} from 'zod';
+import {ZodType} from 'zod/lib/types';
+import {stringToBoolean} from './base';
 
 export const zex = {
   str: {
@@ -25,5 +26,21 @@ export const zex = {
       z.boolean(),
       z.string().transform<boolean>(s => stringToBoolean(s)),
     ]),
+  },
+  parse: {
+    default: <T>(type: ZodDefault<ZodType<T>>, data: unknown): T => {
+      try {
+        return type.parse(data);
+      } catch (e) {
+        return type.parse(undefined);
+      }
+    },
+    json: <T>(type: ZodDefault<ZodType<T>>, data: string) => {
+      try {
+        return zex.parse.default(type, JSON.parse(data));
+      } catch (e) {
+        return type.parse(undefined);
+      }
+    },
   },
 };
